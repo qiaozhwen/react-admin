@@ -1,4 +1,1 @@
-#npm install
-#npm start
-#运行后截图
-![Image text](assests/images/test.png)
+this is an admin system for users, but it still is under develop
