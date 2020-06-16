@@ -10,7 +10,7 @@ import 'echarts/lib/component/markPoint';
 import ReactEcharts from 'echarts-for-react';
 export default class DashBord extends React.Component<any, any>{
     getOption =()=> {
-        let option = {
+        let option: any = {
             title:{
                 text:'小程序订单',
                 x:'center'
@@ -36,7 +36,7 @@ export default class DashBord extends React.Component<any, any>{
     }
 
     getOption2 =()=> {
-        let option = {
+        let option: any = {
             title:{
                 text:'小程序订单'
             },
