@@ -1,15 +1,34 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, FC} from 'react'
 import {Menu, Button} from 'antd';
 import {
-    AppstoreOutlined,
     PieChartOutlined,
-    DesktopOutlined,
-    ContainerOutlined,
-    MailOutlined,
 } from '@ant-design/icons';
 import {withRouter} from "react-router-dom";
 
 const {SubMenu} = Menu;
+const SideBarExtend: FC<any> = (props: any) => {
+    const {role} = props;
+    const renderNode = props.sideBars.map((cur: any) => {
+        return !!cur.children && !!cur.children.length ?
+            cur.roles.indexOf(role) > -1 ?
+                <SubMenu key={`index-${cur.name}`} icon={<PieChartOutlined/>} title={cur.name}>
+                    <SideBar sideBars={cur.children} role={role} history={props.history}/>
+                </SubMenu> : null
+            :
+            cur.roles.indexOf(role) > -1 ?
+                <Menu.Item key={`index-${cur.name}`} icon={<PieChartOutlined/>}
+                           onClick={() => {
+                               props.handleClick(cur)
+                           }}>{cur.name}</Menu.Item> : null
+    });
+    return (
+        <Fragment>
+            {renderNode}
+        </Fragment>
+    )
+
+};
+
 class SideBar extends React.Component<any, any> {
     state = {
         collapsed: false,
@@ -42,23 +61,36 @@ class SideBar extends React.Component<any, any> {
                     defaultOpenKeys={['sub1']}
                     mode="inline"
                     theme="dark"
-                    style={{height: '100%', background: '#004771', border: 'none'}}
+                    style={{height: '100%', border: 'none'}}
                     inlineCollapsed={this.state.collapsed}
                 >
                     {sideBars.map((cur: any) => {
                         return !!cur.children && !!cur.children.length ?
                             cur.roles.indexOf(role) > -1 ?
-                                <SubMenu key={`index-${cur.name}-text`} icon={<PieChartOutlined/>} title={cur.name}>
-                                    <SideBar sideBars={cur.children} role={role} history={this.props.history}/>
+                                <SubMenu key={`index-${cur.name}`} icon={<PieChartOutlined/>} title={cur.name}>
+                                    {/*<SideBar sideBars={cur.children} role={role} history={this.props.history}/>*/}
+                                    {cur.children.map((item: any) => {
+                                        return (
+                                            <Menu.Item key={`index-${item.name}`} icon={<PieChartOutlined/>}
+                                                       onClick={() => {
+                                                           this.handleClick(item)
+                                                       }}>
+                                                {item.name}
+                                            </Menu.Item>
+                                        )
+                                    })}
                                 </SubMenu> : null
                             :
                             cur.roles.indexOf(role) > -1 ?
                                 <Menu.Item key={`index-${cur.name}`} icon={<PieChartOutlined/>}
-                                           onClick={()=>{this.handleClick(cur)}}>{cur.name}</Menu.Item> : null
+                                           onClick={() => {
+                                               this.handleClick(cur)
+                                           }}>{cur.name}</Menu.Item> : null
                     })}
                 </Menu>
             </Fragment>
         )
     }
 }
+
 export default withRouter(SideBar);

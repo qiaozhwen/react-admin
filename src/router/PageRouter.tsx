@@ -8,9 +8,9 @@ export default () => (
     <Router>
         <Switch>
             <Route exact path="/" render={() => <Redirect to="/app" push/>}/>
-            <Route path="/app" component={Home}/>
+            <Route  path="/app" component={Home}/>
             <Route exact path="/login" component={Login}/>
-            <Route component={Page404}/>
+            <Route exact path="/404" component={Page404}/>
         </Switch>
     </Router>
 )
