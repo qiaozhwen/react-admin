@@ -5,6 +5,7 @@ module.exports = {
     mode: 'production',
     entry: {
         'index': './index.tsx',
+        'test': './test.js'
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -44,7 +45,7 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: ['.js', '.jsx'], //后缀名自动补全
+        extensions: ['.js', '.jsx', '.tsx', 'ts'], //后缀名自动补全
     },
     optimization: {
         splitChunks: {
@@ -56,10 +57,6 @@ module.exports = {
             automaticNameDelimiter: '~',
             name: true,
             cacheGroups: {
-                nmsl: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10
-                },
                 default: {
                     minChunks: 2,
                     priority: -20,
