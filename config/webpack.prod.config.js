@@ -4,9 +4,7 @@ console.log(__dirname, '-------------')
 module.exports = {
     mode: 'production',
     entry: {
-        'index': './index.js',
-        'entry1': './entry-1.js',
-        'entry2': './entry-2.js',
+        'index': './index.tsx',
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -32,6 +30,11 @@ module.exports = {
                     esModule: false, // 这里设置为false
                 }
             },
+            {
+                test: /\.(tsx|ts)?$/,
+                use: 'awesome-typescript-loader',
+                exclude: /node_modules/
+            }
         ]
     },
     plugins: [

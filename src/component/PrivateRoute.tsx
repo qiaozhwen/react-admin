@@ -2,8 +2,8 @@ import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import checkUser from '../api/getUser'
 
-export default class PrivateRoute extends React.Component {
-    constructor(props) {
+export default class PrivateRoute extends React.Component<any, any> {
+    constructor(props: any) {
         super(props);
         this.state = {
             userRole: ''

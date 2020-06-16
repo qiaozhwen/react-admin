@@ -10,7 +10,7 @@ import {
 import {withRouter} from "react-router-dom";
 
 const {SubMenu} = Menu;
-class SideBar extends React.Component {
+class SideBar extends React.Component<any, any> {
     state = {
         collapsed: false,
         userRole: ''
@@ -29,7 +29,7 @@ class SideBar extends React.Component {
         });
     };
 
-    handleClick = (data) => {
+    handleClick = (data: any) => {
         this.props.history.push(data.path)
     };
 
@@ -45,7 +45,7 @@ class SideBar extends React.Component {
                     style={{height: '100%', background: '#004771', border: 'none'}}
                     inlineCollapsed={this.state.collapsed}
                 >
-                    {sideBars.map(cur => {
+                    {sideBars.map((cur: any) => {
                         return !!cur.children && !!cur.children.length ?
                             cur.roles.indexOf(role) > -1 ?
                                 <SubMenu key={`index-${cur.name}-text`} icon={<PieChartOutlined/>} title={cur.name}>
