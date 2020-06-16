@@ -250,10 +250,10 @@ export default class DashBord extends React.Component<any, any>{
     render(){
         return(
             <div style={{display: "flex",flexWrap: "wrap"}}>
-                <div title="饼形图表之三" style={{width: '50%'}}>
+                <div title="饼形图表之三" style={{width: '49%'}}>
                     <ReactEcharts option={this.getOption3()} theme="Imooc" style={{height:'400px'}}/>
                 </div>
-                <div title="柱形图表之一" style={{width: '50%'}}>
+                <div title="柱形图表之一" style={{width: '49%'}}>
                     <ReactEcharts option={this.getOption2()} theme="Imooc"  style={{height:'500px'}}/>
                 </div>
                 <div style={{width: '100%'}}>
