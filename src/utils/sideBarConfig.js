@@ -1,6 +1,6 @@
 const sideBars = [
     {
-        path: '/app/detail',
+        path: '/app/dash-bord',
         name: '首页',
         roles: ['admin', 'user']
     },
