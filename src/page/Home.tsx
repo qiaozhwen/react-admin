@@ -1,13 +1,6 @@
 import React, {Component} from 'react'
 import './Home.css'
-import { Menu, Button } from 'antd';
-import {
-    AppstoreOutlined,
-    PieChartOutlined,
-    DesktopOutlined,
-    ContainerOutlined,
-    MailOutlined,
-} from '@ant-design/icons';
+import { Menu } from 'antd';
 import checkUser from "../api/getUser";
 import sideBars from '../utils/sideBarConfig'
 import SideBar from '../component/SideBar'
