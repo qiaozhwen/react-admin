@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 console.log(__dirname, '-------------')
 module.exports = {
     mode: 'production',
@@ -17,10 +18,13 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
-                use: [
-                    {loader: "style-loader"},
-                    {loader: "css-loader"}
-                ]
+                // use: ExtractTextPlugin.extract({
+                //     use:"css-loader",
+                //     fallback:"style-loader",
+                // })
+                loader:ExtractTextPlugin.extract({
+                    use:["css-loader"],
+                })
             },
             {
                 test: /\.(js|jsx)$/,
@@ -48,6 +52,9 @@ module.exports = {
             title: "QZ REACT",
             template: 'index.html'
         }),
+        new ExtractTextPlugin({
+            filename:`[name]_[hash].css`,
+        })
         // new CopyWebpackPlugin({ // 复制插件
         //     patterns: [{
         //         from: path.resolve(__dirname, '../assests'),
