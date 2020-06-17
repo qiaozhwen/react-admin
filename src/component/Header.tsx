@@ -14,6 +14,9 @@ export default class Header extends React.Component{
                         <a href="">详情</a>
                     </Breadcrumb.Item>
                 </Breadcrumb>
+                <div className={'header-right'}>
+                    <img src={require('../../assests/images/myInfo.gif')}/>
+                </div>
             </div>
         )
     }

@@ -1,23 +1,26 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 console.log(__dirname, '-------------')
 module.exports = {
     mode: 'production',
     entry: {
-        'index': './index.tsx',
-        'test': './test.js'
+        'index': './index.tsx'
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: "[name].js",
-        publicPath:"./"
+        filename: "[name]_[hash].js",
+        publicPath: "./",
     },
     module: {
         //loaders加载器
         rules: [
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    {loader: "style-loader"},
+                    {loader: "css-loader"}
+                ]
             },
             {
                 test: /\.(js|jsx)$/,
@@ -26,9 +29,11 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif)$/i,
-                loader: 'url-loader',
+                loader: 'file-loader',
                 options: {
-                    esModule: false, // 这里设置为false
+                    name: '[name]_[hash].[ext]',
+                    esModule: false,
+                    outputPath: '/images'
                 }
             },
             {
@@ -42,14 +47,20 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "QZ REACT",
             template: 'index.html'
-        })
+        }),
+        // new CopyWebpackPlugin({ // 复制插件
+        //     patterns: [{
+        //         from: path.resolve(__dirname, '../assests'),
+        //         to: path.resolve(__dirname, '../dist/static')
+        //     }]
+        // })
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.tsx', 'ts'], //后缀名自动补全
     },
     optimization: {
         splitChunks: {
-            chunks: 'async',
+            chunks: 'all',
             minSize: 30000,
             minChunks: 1,
             maxAsyncRequests: 5,
@@ -57,8 +68,12 @@ module.exports = {
             automaticNameDelimiter: '~',
             name: true,
             cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                },
                 default: {
-                    minChunks: 2,
+                    minChunks: 5,
                     priority: -20,
                     reuseExistingChunk: true
                 }
