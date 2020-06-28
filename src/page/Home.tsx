@@ -16,7 +16,7 @@ class Home extends Component<any, any>{
         collapsed: false,
         userRole: ''
     };
-    componentDidMount() {
+    componentWillMount() {
         console.log('check user');
         // check user
         checkUser.testHttp().then((res: any)=>{

@@ -10,7 +10,7 @@ export default class PrivateRoute extends React.Component<any, any> {
         }
     }
     componentDidMount() {
-        console.log('detail', this.props)
+        console.log('check user PrivateRoute')
     }
 
     componentWillMount() {
