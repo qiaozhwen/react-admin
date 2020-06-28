@@ -5,8 +5,10 @@ import checkUser from "../api/getUser";
 import sideBars from '../utils/sideBarConfig'
 import SideBar from '../component/SideBar'
 import Header from "../component/Header";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import AppRouter from "../router/AppRouter";
 import {withRouter} from "react-router-dom";
+import Auth from '../component/Auth'
 
 const { SubMenu } = Menu;
 class Home extends Component<any, any>{
@@ -17,27 +19,26 @@ class Home extends Component<any, any>{
     componentDidMount() {
         console.log('check user');
         // check user
-        checkUser.checkUser('123').then((res: any) => {
-            if('' === ''){
-                this.props.history.push('/login')
-            }
-            this.setState({
-                userRole: 'admin'
-            })
+        checkUser.testHttp().then((res: any)=>{
+            console.log('res111', res)
+        }).catch((err: any)=>{
+            console.log('err111', err)
         })
     }
 
     render() {
         return (
-            <div className={'home'}>
-                <div style={{ width: 256}}>
-                    <SideBar sideBars={sideBars} role='admin'/>
+            <Auth id={'page-home'}>
+                <div className={'home'}>
+                    <div style={{ width: 256}}>
+                        <SideBar sideBars={sideBars} role='admin'/>
+                    </div>
+                    <div style={{flex: 1}}>
+                        <Header/>
+                        <AppRouter/>
+                    </div>
                 </div>
-                <div style={{flex: 1}}>
-                    <Header/>
-                    <AppRouter/>
-                </div>
-            </div>
+            </Auth>
         );
     }
 }

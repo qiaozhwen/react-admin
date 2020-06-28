@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-import { Table } from 'antd';
+import { Table } from 'react-bootstrap';
+import {connect} from "react-redux";
+import Auth from '../component/Auth'
 
 const columns = [
     {
@@ -68,13 +70,60 @@ function onChange(pagination: any, filters: any, sorter: any, extra: any) {
     console.log('params', pagination, filters, sorter, extra);
 }
 
-export default class Detail extends React.Component{
+class Detail extends React.Component<any, any>{
     componentWillMount() {
-        console.log('check user2');
+        console.log('check user2', this.props.data);
     }
     render() {
         return(
-            <Table columns={columns} dataSource={data} onChange={onChange} />
+            <Auth auth-id={'page-detail'}>
+                <Table responsive>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                    </tr>
+                    </tbody>
+                </Table>
+            </Auth>
         )
     }
 }
+const mapState = (state: any)=>({
+    data:state
+});
+export default connect(mapState)(Detail)

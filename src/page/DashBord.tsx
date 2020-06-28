@@ -7,8 +7,9 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/markPoint';
-import ReactEcharts from 'echarts-for-react';
-import {Table} from "antd";
+import Auth from '../component/Auth'
+import {Table} from "react-bootstrap";
+import ReactEcharts from "echarts-for-react";
 const columns = [
     {
         title: 'Name',
@@ -249,17 +250,60 @@ export default class DashBord extends React.Component<any, any>{
 
     render(){
         return(
-            <div style={{display: "flex",flexWrap: "wrap"}}>
-                <div title="饼形图表之三" style={{width: '49%'}}>
-                    <ReactEcharts option={this.getOption3()} theme="Imooc" style={{height:'400px'}}/>
+            <Auth  auth-id={'page-dash-bord'}>
+                <div style={{display: "flex",flexWrap: "wrap"}}>
+                    <div title="饼形图表之三" style={{width: '49%'}}>
+                        <ReactEcharts option={this.getOption3()} theme="Imooc" style={{height:'400px'}}/>
+                    </div>
+                    <div title="柱形图表之一" style={{width: '49%'}}>
+                        <ReactEcharts option={this.getOption2()} theme="Imooc"  style={{height:'500px'}}/>
+                    </div>
+                    <div style={{width: '100%'}}>
+                        <Table responsive>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Table heading</th>
+                                <th>Table heading</th>
+                                <th>Table heading</th>
+                                <th>Table heading</th>
+                                <th>Table heading</th>
+                                <th>Table heading</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                            </tr>
+                            </tbody>
+                        </Table>
+                    </div>
                 </div>
-                <div title="柱形图表之一" style={{width: '49%'}}>
-                    <ReactEcharts option={this.getOption2()} theme="Imooc"  style={{height:'500px'}}/>
-                </div>
-                <div style={{width: '100%'}}>
-                    <Table columns={columns} dataSource={data} onChange={onChange} />
-                </div>
-            </div>
+            </Auth>
         )
     }
 }

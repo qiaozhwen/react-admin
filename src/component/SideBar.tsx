@@ -6,28 +6,6 @@ import {
 import {withRouter} from "react-router-dom";
 
 const {SubMenu} = Menu;
-const SideBarExtend: FC<any> = (props: any) => {
-    const {role} = props;
-    const renderNode = props.sideBars.map((cur: any) => {
-        return !!cur.children && !!cur.children.length ?
-            cur.roles.indexOf(role) > -1 ?
-                <SubMenu key={`index-${cur.name}`} icon={<PieChartOutlined/>} title={cur.name}>
-                    <SideBar sideBars={cur.children} role={role} history={props.history}/>
-                </SubMenu> : null
-            :
-            cur.roles.indexOf(role) > -1 ?
-                <Menu.Item key={`index-${cur.name}`} icon={<PieChartOutlined/>}
-                           onClick={() => {
-                               props.handleClick(cur)
-                           }}>{cur.name}</Menu.Item> : null
-    });
-    return (
-        <Fragment>
-            {renderNode}
-        </Fragment>
-    )
-
-};
 
 class SideBar extends React.Component<any, any> {
     state = {

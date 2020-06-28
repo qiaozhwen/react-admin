@@ -10,7 +10,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: "[name]_[hash].js",
+        filename: "[name].js",
+        chunkFilename: '[name].js',
         publicPath: "./",
     },
     module: {
@@ -67,23 +68,42 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
-            chunks: 'all',
-            minSize: 30000,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
-            name: true,
             cacheGroups: {
-                vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                react: {
+                    chunks: 'all',
+                    name: 'react',
+                    test: ({ resource = '' }) => {
+                        const [, modulePath] = resource.split(path.resolve(__dirname, '..', 'node_modules'));
+                        return modulePath && modulePath.includes('react');
+                    },
+                    reuseExistingChunk: true,
+                    enforce: true
                 },
-                default: {
-                    minChunks: 5,
-                    priority: -20,
-                    reuseExistingChunk: true
-                }
+                echart: {
+                    test: (module) => {
+                        return /echart/.test(module.context);
+                    }, // 直接使用 test 来做路径匹配，echart
+                    chunks: "all",
+                    name: "echart",
+                    reuseExistingChunk: true,
+                    enforce: true
+                },
+                bootstrap: {
+                    test: (module) => {
+                        return /bootstrap/.test(module.context);
+                    }, // 直接使用 test 来做路径匹配，echart
+                    chunks: "all",
+                    name: "bootstrap",
+                    reuseExistingChunk: true,
+                    enforce: true
+                },
+                common: {
+                    chunks: "all",
+                    name: 'common',
+                    minChunks: 2,
+                    reuseExistingChunk: true,
+                    enforce: true
+                },
             }
         }
     }

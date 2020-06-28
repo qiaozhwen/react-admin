@@ -4,5 +4,10 @@ export default {
         return request({
             url: `/checkUser?code=${code}`,
         })
+    },
+    testHttp () {
+        return request({
+            url: '/test-http'
+        })
     }
 }

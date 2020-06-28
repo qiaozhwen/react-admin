@@ -14,7 +14,7 @@ export default class PrivateRoute extends React.Component<any, any> {
     }
 
     componentWillMount() {
-        checkUser.checkUser('123').then(res => {
+        checkUser.checkUser('123').then((res: any) => {
             this.setState({
                 userRole: 'admin'
             })
