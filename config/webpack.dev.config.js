@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-console.log(__dirname, '-------------')
+console.log(__dirname, '-------------');
 module.exports = {
     mode: 'development',
     entry: './index.tsx',
@@ -36,7 +36,7 @@ module.exports = {
     },
     devServer: {
         hot: true,
-        port: 8080,
+        port: 3000,
         progress: true,
         contentBase: './build',
     },

@@ -34,6 +34,9 @@ class SideBar extends React.Component<any, any> {
         const {sideBars, role} = this.props;
         return (
             <Fragment>
+                <div style={{background: '#001529', textAlign:"center"}}>
+                    <img src={require('../../assests/images/America.png')}/>
+                </div>
                 <Menu
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
