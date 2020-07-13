@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 console.log(__dirname, '-------------');
 module.exports = {
     mode: 'development',
@@ -44,6 +45,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "QZ REACT",
             template: 'index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env': require(`../env/${process.env.NODE_ENV}`)
         })
     ],
     resolve: {

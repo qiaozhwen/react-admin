@@ -5,14 +5,15 @@
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --env development --config config/webpack.dev.config.js",
-    "build": "webpack --env production --config config/webpack.prod.config.js"
+    "start": "cross-env NODE_ENV=dev webpack-dev-server --env development --config config/webpack.dev.config.js",
+    "build": "cross-env NODE_ENV=prod webpack --env production --config config/webpack.prod.config.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "antd": "^4.3.1",
     "axios": "^0.19.2",
+    "cross-env": "^7.0.2",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
     "loadsh": "0.0.4",
