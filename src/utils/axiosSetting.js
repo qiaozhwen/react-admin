@@ -1,7 +1,7 @@
 import axios from 'axios'
 axios.withCredentials = true;
 const service = axios.create({
-    baseURL: 'http://localhost:9527/'
+    baseURL: process.env.NODE_ENV
 });
 console.log('111111111111111111', process.env);
 service.defaults.timeout = 10000;
