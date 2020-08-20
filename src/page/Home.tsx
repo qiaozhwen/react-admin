@@ -19,10 +19,10 @@ class Home extends Component<any, any>{
     componentWillMount() {
         console.log('check user');
         // check user
-        checkUser.testHttp().then((res: any)=>{
-            console.log('res111', res)
-        }).catch((err: any)=>{
-            console.log('err111', err)
+        checkUser.checkUser().then((res: any) => {
+            this.setState({
+                userRole: 'admin'
+            })
         })
     }
 

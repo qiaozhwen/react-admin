@@ -9,9 +9,9 @@ const Page404: FC<any> = ()=>{
         console.log('useEffect');
         setCount(1);
         console.log('after useEffect', count);
-        getUser.testHttp().then((res: any)=>{
-            console.log(res)
-        })
+        // getUser.testHttp().then((res: any)=>{
+        //     console.log(res)
+        // })
     }); console.log('404页面');
     return(
         <div style={{
@@ -22,7 +22,7 @@ const Page404: FC<any> = ()=>{
             alignItems: "center"
         }}>
             <div>
-                {/*<img src={require('../../assests/images/404.png')}/>*/}
+                <img src={require('../../assests/images/404.png')}/>
                 <p style={{textAlign: "center"}}>
                     <Link to={'/login'}>去登陆{count}</Link>
                 </p>

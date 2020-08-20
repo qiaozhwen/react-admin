@@ -1,4 +1,4 @@
 module.exports={
     name: '"production"',
-    baseURI: '"http://localhost:3000/"'
+    baseURI: '"http://localhost:9259/"'
 };

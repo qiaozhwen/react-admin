@@ -13,5 +13,6 @@ export default () => (
         <Switch>
             <PrivateRoute exact path="/app/dash-bord" component={AsyncComponent(() => import(/* webpackChunkName: "Page-DashBord" */`../page/DashBord`))} />
             <PrivateRoute exact path="/app/detail" component={AsyncComponent(() => import(/* webpackChunkName: "Page-Detail" */`../page/Detail`))} />
+            <PrivateRoute exact path="/app/test" component={AsyncComponent(() => import(/* webpackChunkName: "Page-Detail" */`../page/Test`))} />
         </Switch>
 )
