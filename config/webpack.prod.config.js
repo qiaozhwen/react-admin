@@ -10,8 +10,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: "[name].js",
-        chunkFilename: '[name].js',
+        filename: "[name]-[hash:5].js",
+        chunkFilename: '[name]-[hash:5].js',
         publicPath: "./",
     },
     module: {
@@ -103,7 +103,7 @@ module.exports = {
                     minChunks: 2,
                     reuseExistingChunk: true,
                     enforce: true
-                },
+                }
             }
         }
     }
