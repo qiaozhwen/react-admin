@@ -1,7 +1,7 @@
 import axios from 'axios'
 axios.withCredentials = true;
 const service = axios.create({
-    baseURL: "http://localhost:9529/"
+    baseURL: "http://111.229.212.111:9529/"
 });
 service.defaults.timeout = 10000;
 service.interceptors.request.use(
@@ -19,7 +19,7 @@ service.interceptors.response.use(
     },error => {
         console.log('-------------error', error.response.status);
         if(error.response.status == '401'){
-            // window.location.href='http://localhost:8888/#/login';
+            window.location.href='http://111.229.212.111:9529/console/#/login';
         }
         return Promise.reject(error)
     }

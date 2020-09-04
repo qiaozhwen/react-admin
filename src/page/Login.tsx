@@ -1,45 +1,65 @@
-import React from 'react';
-import './Login.css'
-import {Form, Button} from 'react-bootstrap'
-export default class Login extends React.Component<any, any> {
-    constructor(props: any){
-        super(props);
-    };
-    componentDidMount(): void {
-        this.state = {
-            name: '',
-            pwd: '',
-            tel: ''
-        };
+import React, {FC, useState} from 'react';
+import './Login.css';
+import {createForm} from "rc-form";
+import {Form, Button} from 'react-bootstrap';
+import loginFnc from '../api/login'
+import {withRouter} from "react-router-dom";
+const Login: FC<any> = ({
+form: {getFieldDecorator, validateFields},
+history
+}: any) => {
+    const [loginStatus, setLoginStatus] = useState(false);
+    function handleClick() {
+        validateFields((_err: any, value: any)=>{
+            if(!_err){
+                const {name, password, telephone} = value;
+                loginFnc.login({username: name, password, telephone}).then((res: any)=>{
+                    history.push('/app')
+                }).catch((err: any)=>{
+                    setLoginStatus(true)
+                })
+            }
+        })
     }
-
-    handleClick () {
-        console.log('111', this.state.name.current.value)
-    };
-    render() {
-        return (
-            <div className={'login-body'}>
-                <div className={'login-content'}>
-                    <h2>用户登录</h2>
-                    <Form>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="name" placeholder="name"/>
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password"/>
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>telephone</Form.Label>
-                            <Form.Control placeholder="Telephone" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit" onClick={() => {this.handleClick()}}>
-                            Submit
-                        </Button>
-                    </Form>
-                </div>
-            </div>
-        )
-    }
-}
+     return(
+         <div className={'login-body'}>
+             <div className={'login-content'}>
+                 <h2>用户登录</h2>
+                 <Form>
+                     {getFieldDecorator('name', {
+                         initValue: ''
+                     })(
+                         <Form.Group controlId="formBasicEmail">
+                             <Form.Label>Name</Form.Label>
+                             <Form.Control type="name" placeholder="name"/>
+                         </Form.Group>
+                     )}
+                     {
+                         getFieldDecorator('password', {
+                             initValue: ''
+                         })(
+                             <Form.Group controlId="formBasicPassword">
+                                 <Form.Label>Password</Form.Label>
+                                 <Form.Control type="password" placeholder="Password"/>
+                             </Form.Group>
+                         )
+                     }
+                     {
+                         getFieldDecorator('telephone', {
+                             initValue: ''
+                         })(
+                             <Form.Group controlId="formBasicPassword">
+                                 <Form.Label>telephone</Form.Label>
+                                 <Form.Control placeholder="Telephone" />
+                             </Form.Group>
+                         )
+                     }
+                     <Button variant="primary" type="submit" onClick={(event) => {event.preventDefault();handleClick()}}>
+                         Submit
+                     </Button>
+                 </Form>
+             </div>
+         </div>
+     )
+};
+export default createForm()(Login)

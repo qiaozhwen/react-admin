@@ -4,7 +4,7 @@ export default {
         return request({
             method: 'post',
             url: 'login',
-            body: {username, password, telephone}
+            params: {username, password, telephone}
         })
     }
 }
