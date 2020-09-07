@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 console.log(__dirname, '-------------')
@@ -9,7 +10,7 @@ module.exports = {
         'index': './index.tsx'
     },
     output: {
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, '../dist/public'),
         filename: "[name]-[hash:5].js",
         chunkFilename: '[name]-[hash:5].js',
         publicPath: "./",
@@ -49,19 +50,20 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: "QZ REACT",
             template: 'index.html'
         }),
         new ExtractTextPlugin({
             filename:`[name]_[hash].css`,
+        }),
+        new CopyWebpackPlugin({ // 复制插件
+            patterns: [{
+                from: path.resolve(__dirname, '../server'),
+                to: path.resolve(__dirname, '../dist')
+            }]
         })
-        // new CopyWebpackPlugin({ // 复制插件
-        //     patterns: [{
-        //         from: path.resolve(__dirname, '../assests'),
-        //         to: path.resolve(__dirname, '../dist/static')
-        //     }]
-        // })
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.tsx', 'ts'], //后缀名自动补全

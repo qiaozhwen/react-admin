@@ -1,19 +1,18 @@
 const express = require('express');
-const path = require('path');
-const fs = require("fs");
-const request = require('request');
-const cors = require('cors');
-const http = require('http');
+// const path = require('path');
+// const fs = require("fs");
+// const request = require('request');
+// const cors = require('cors');
+// const http = require('http');
 const app = express();
-app.use(express.static("public"));
-const port = 8889;
+const port = 8888;
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://111.229.212.111:27017/';
-var base64 = require('base-64');
-var superagent = require('superagent');
+const base64 = require('base-64');
+// var superagent = require('superagent');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const proxy = require('express-http-proxy');
+// const proxy = require('express-http-proxy');
 app.use(session({
     secret: 'qz',
     name: 'qz-node',
@@ -29,7 +28,7 @@ app.use(session({
     })
 }));
 
-app.use(cors());
+// app.use(cors());
 app.post('/api/registerUser', (req, response) => {
     MongoClient.connect(url, {useNewUrlParser: true}, function (err, db) {
         if (err) throw err;

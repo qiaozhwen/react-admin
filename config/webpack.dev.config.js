@@ -38,8 +38,7 @@ module.exports = {
     devServer: {
         hot: true,
         port: 8888,
-        progress: true,
-        contentBase: './build'
+        progress: true
     },
     plugins: [
         new HtmlWebpackPlugin({
