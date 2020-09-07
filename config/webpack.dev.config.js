@@ -39,7 +39,7 @@ module.exports = {
         hot: true,
         port: 8888,
         progress: true,
-        contentBase: './build',
+        contentBase: './build'
     },
     plugins: [
         new HtmlWebpackPlugin({

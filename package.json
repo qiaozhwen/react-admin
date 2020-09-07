@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=dev webpack-dev-server --env development --config config/webpack.dev.config.js",
+    "start": "concurrently \"node server/router.js\" \"cross-env NODE_ENV=dev  webpack-dev-server --env development --config config/webpack.dev.config.js\"",
     "build": "cross-env NODE_ENV=prod webpack --env production --config config/webpack.prod.config.js"
   },
   "author": "",
@@ -13,10 +13,12 @@
   "dependencies": {
     "antd": "^4.3.1",
     "axios": "^0.19.2",
+    "concurrently": "^5.3.0",
     "cross-env": "^7.0.2",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
     "loadsh": "0.0.4",
+    "pm2": "^4.4.1",
     "qayfirework": "^1.0.0",
     "rc-form": "^2.4.11",
     "react-bootstrap": "^1.0.1",
@@ -50,6 +52,21 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
-    "bootstrap": "^4.5.0"
+    "bootstrap": "^4.5.0",
+    "base-64": "^0.1.0",
+    "connect-mongo": "^3.2.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.2",
+    "express-session": "^1.17.1",
+    "express-ws": "^4.0.0",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.7",
+    "request": "^2.88.2",
+    "socket.io": "^2.3.0",
+    "superagent": "^5.3.1",
+    "cors": "^2.8.5"
   }
 }
