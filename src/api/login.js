@@ -3,7 +3,7 @@ export default {
     login: function ({username, password, telephone}) {
         return request({
             method: 'post',
-            url: 'login',
+            url: '/api/login',
             params: {username, password, telephone}
         })
     }

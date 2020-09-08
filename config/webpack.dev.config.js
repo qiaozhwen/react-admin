@@ -38,7 +38,10 @@ module.exports = {
     devServer: {
         hot: true,
         port: 8888,
-        progress: true
+        // progress: true,
+        proxy: {
+            '/api': "http://localhost:8889/"
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({
