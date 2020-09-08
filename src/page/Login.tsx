@@ -24,7 +24,9 @@ history
      return(
          <div className={'login-body'}>
              <div className={'login-content'}>
-                 <h2>用户登录</h2>
+                 <div style={{textAlign: "center"}}>
+                     <h3>登录</h3>
+                 </div>
                  <Form>
                      {getFieldDecorator('name', {
                          initValue: ''
@@ -54,9 +56,11 @@ history
                              </Form.Group>
                          )
                      }
-                     <Button variant="primary" type="submit" onClick={(event) => {event.preventDefault();handleClick()}}>
-                         Submit
-                     </Button>
+                     <div style={{textAlign: "center"}}>
+                         <Button variant="primary" type="submit" onClick={(event) => {event.preventDefault();handleClick()}}>
+                             Submit
+                         </Button>
+                     </div>
                  </Form>
              </div>
          </div>
