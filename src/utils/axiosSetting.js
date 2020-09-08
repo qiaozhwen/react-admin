@@ -1,7 +1,7 @@
 import axios from 'axios'
 axios.withCredentials = true;
 const service = axios.create({
-    baseURL: "http://localhost:8888/"
+    baseURL: process.env.NODE_ENV === 'development' ? "http://localhost:8888/" : "http://localhost:8889/"
 });
 service.defaults.timeout = 10000;
 service.interceptors.request.use(
