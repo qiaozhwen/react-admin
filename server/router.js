@@ -6,6 +6,7 @@ const express = require('express');
 // const http = require('http');
 const app = express();
 const port = 8889;
+app.use(express.static("public"));
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://111.229.212.111:27017/';
 const base64 = require('base-64');
