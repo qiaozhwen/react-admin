@@ -1,4 +1,18 @@
 {
-  "presets": ["env", "stage-0", "react"],
-  "plugins": ["transform-runtime"]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "chrome": 52,
+          "browsers": ["last 2 versions", "safari 7"],
+          "ie": 8
+        },
+        "modules": false,
+        "useBuiltIns": "usage",
+        "corejs": 2,
+        "debug": false
+      }
+    ]
+  ]
 }
