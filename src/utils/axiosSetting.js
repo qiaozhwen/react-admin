@@ -24,7 +24,10 @@ service.interceptors.response.use(
   (error) => {
     console.log("-------------error", error.response.status);
     if (error.response.status == "401") {
-      // window.location.href = "http://localhost:8888/#/login";
+      window.location.href =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:8888/#/login"
+          : "http://111.229.212.111:8889/#/login";
     }
     return Promise.reject(error);
   }

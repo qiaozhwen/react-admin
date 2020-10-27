@@ -2,8 +2,8 @@ import React, { FC, useState } from "react";
 import "./Login.css";
 import { createForm } from "rc-form";
 import { Form, Button } from "react-bootstrap";
+import { notification } from "antd";
 import loginFnc from "../api/login";
-import { withRouter } from "react-router-dom";
 const Login: FC<any> = ({
   form: { getFieldDecorator, validateFields },
   history,
@@ -16,9 +16,11 @@ const Login: FC<any> = ({
         loginFnc
           .login({ username: name, password, telephone })
           .then((res: any) => {
+            notification.success({ message: "欢迎使用react admin" });
             history.push("/app");
           })
           .catch((err: any) => {
+            notification.error({ message: "登录失败,请联系管理员" });
             setLoginStatus(true);
           });
       }
