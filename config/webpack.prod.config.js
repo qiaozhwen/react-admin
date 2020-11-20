@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const SpeedMesurePlugin = require("speed-measure-webpack-plugin");
 console.log(__dirname, "-------------");
 module.exports = {
   mode: "production",
@@ -67,6 +68,7 @@ module.exports = {
         },
       ],
     }),
+    new SpeedMesurePlugin(),
   ],
   resolve: {
     extensions: [".js", ".jsx", ".tsx", "ts"], //后缀名自动补全

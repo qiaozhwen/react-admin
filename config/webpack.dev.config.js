@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const SpeedMesurePlugin = require("speed-measure-webpack-plugin");
 const webpack = require("webpack");
 console.log(__dirname, "-------------");
 module.exports = {
@@ -52,6 +53,7 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": require(`../env/${process.env.NODE_ENV}`),
     }),
+    new SpeedMesurePlugin(),
   ],
   resolve: {
     extensions: [".js", ".jsx", ".tsx", "ts"], //后缀名自动补全

@@ -9,7 +9,7 @@ const Test = ({ tya = { name: "123" } }: any) => {
     perople: { name: "333124513", age: "1511" },
   });
   function testfunc() {}
-  console.log("useEffect run father");
+  // console.log("useEffect run father");
   return (
     <>
       <div
@@ -26,28 +26,24 @@ const Test = ({ tya = { name: "123" } }: any) => {
       {/*>*/}
       {/*  11111111111*/}
       {/*</div>*/}
-      <Child
-        testfunc={useCallback(() => {
-          return testfunc;
-        }, [test])}
-        tya={{ test: test }}
-      />
+      <Child testfunc={testfunc} tya={test} />
     </>
   );
 };
 const Child = memo(({ tya }: any) => {
-  useEffect(() => {
-    console.log("useEffect run");
-    return () => {
-      console.log("useEffect end");
-    };
-  }, []);
-  useEffect(() => {
-    console.log("useEffect run222");
-    return () => {
-      console.log("useEffect end222");
-    };
-  });
+  console.log("child render");
+  // useEffect(() => {
+  //   console.log("useEffect run");
+  //   return () => {
+  //     console.log("useEffect end");
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   console.log("useEffect run222");
+  //   return () => {
+  //     console.log("useEffect end222");
+  //   };
+  // });
   return <div>child</div>;
 });
 export default Test;

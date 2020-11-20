@@ -54,7 +54,7 @@ const Login: FC<any> = ({
           })(
             <Form.Group controlId="formBasicPassword">
               <Form.Label>telephone</Form.Label>
-              <Form.Control placeholder="Telephone" />
+              <Form.Control placeholder="Telephone(not necessary)" />
             </Form.Group>
           )}
           <div style={{ textAlign: "center" }}>
