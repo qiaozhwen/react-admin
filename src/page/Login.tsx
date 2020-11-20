@@ -66,7 +66,7 @@ const Login: FC<any> = ({
                 handleClick();
               }}
             >
-              Submit1
+              Submit2
             </Button>
           </div>
         </Form>
