@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"node server/router.js\" \"cross-env NODE_ENV=dev  webpack-dev-server --env development --config config/webpack.dev.config.js\"",
     "build": "cross-env NODE_ENV=prod webpack --env production --config config/webpack.prod.config.js",
-    "transform": "webpack"
+    "transform": "webpack",
+    "dll": "webpack --config config/webpack.dll.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -69,6 +70,8 @@
     "base-64": "^0.1.0",
     "bootstrap": "^4.5.0",
     "clean-webpack-plugin": "^3.0.0",
+    "thread-loader": "^3.0.4",
+    "ts-loader": "^8.2.0",
     "typescript": "^3.9.5",
     "url-loader": "^4.0.0",
     "webpack": "^4.42.1",

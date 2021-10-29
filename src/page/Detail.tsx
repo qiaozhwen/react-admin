@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import Auth from "../component/Auth";
+import {Modal} from "antd";
 
 const columns = [
   {
@@ -73,17 +74,54 @@ function onChange(pagination: any, filters: any, sorter: any, extra: any) {
 }
 
 class Detail extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state={
+      renderModal: false
+    }
+  }
   componentWillMount() {
     console.log("check user2", this.props.data);
   }
+  eee(){
+    Promise.resolve().then(()=>{
+      this.setState({renderModal: true})
+      console.log('1111', this.state.renderModal)
+      setTimeout(()=>{
+        this.setState({renderModal: false})
+        console.log('1111', this.state.renderModal)
+      }, 100)
+      setTimeout(()=>{
+        this.setState({renderModal: true})
+        console.log('1111', this.state.renderModal)
+      }, 101)
+      setTimeout(()=>{
+        this.setState({renderModal: false})
+        console.log('1111', this.state.renderModal)
+      }, 102)
+      setTimeout(()=>{
+        this.setState({renderModal: true})
+        console.log('1111', this.state.renderModal)
+      }, 103)
+      setTimeout(()=>{
+        this.setState({renderModal: false})
+        console.log('1111', this.state.renderModal)
+      }, 104)
+      setTimeout(()=>{
+        this.setState({renderModal: true})
+        console.log('1111', this.state.renderModal)
+      }, 105)
+    })
+  }
   render() {
+    console.log('1111', this.state.renderModal)
     return (
       <Auth auth-id={"page-detail"}>
         <Table responsive>
           <thead>
             <tr>
               <th>#</th>
-              <th>Table heading</th>
+              <th onClick={()=>this.setState({renderModal: true})}>Table heading</th>
               <th>Table heading</th>
               <th>Table heading</th>
               <th>Table heading</th>
@@ -121,6 +159,7 @@ class Detail extends React.Component<any, any> {
             </tr>
           </tbody>
         </Table>
+        {this.state.renderModal && <Modal visible={true} onOk={this.eee.bind(this)}>vvvvvvvv</Modal> || null}
       </Auth>
     );
   }
