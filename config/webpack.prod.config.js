@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -45,8 +46,18 @@ module.exports = {
       },
       {
         test: /\.(tsx|ts)?$/,
-        use: "awesome-typescript-loader",
+        use: [
+          "ts-loader",
+          {
+            loader: "thread-loader",
+            options: {
+              workers: 2,
+              workerParallelJobs: 50
+            }
+          }
+        ],
         exclude: /node_modules/,
+
       },
     ],
   },
@@ -69,6 +80,10 @@ module.exports = {
       ],
     }),
     new SpeedMesurePlugin(),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./vendor-manifest.json')
+    })
   ],
   resolve: {
     extensions: [".js", ".jsx", ".tsx", "ts"], //后缀名自动补全
@@ -88,15 +103,15 @@ module.exports = {
           reuseExistingChunk: true,
           enforce: true,
         },
-        echart: {
-          test: (module) => {
-            return /echart/.test(module.context);
-          }, // 直接使用 test 来做路径匹配，echart
-          chunks: "all",
-          name: "echart",
-          reuseExistingChunk: true,
-          enforce: true,
-        },
+        // echart: {
+        //   test: (module) => {
+        //     return /echart/.test(module.context);
+        //   }, // 直接使用 test 来做路径匹配，echart
+        //   chunks: "all",
+        //   name: "echart",
+        //   reuseExistingChunk: true,
+        //   enforce: true,
+        // },
         bootstrap: {
           test: (module) => {
             return /bootstrap/.test(module.context);

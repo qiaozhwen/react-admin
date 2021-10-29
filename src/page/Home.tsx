@@ -31,7 +31,7 @@ class Home extends Component<any, any> {
       <Auth id={"page-home"}>
         <div className={"home"}>
           <div style={{ width: 256 }}>
-            <SideBar sideBars={sideBars} role="admin" />
+            {/*<SideBar sideBars={sideBars} role="admin" />*/}
           </div>
           <div style={{ flex: 1 }}>
             <Header />
