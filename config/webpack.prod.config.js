@@ -86,7 +86,7 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", "ts"], //后缀名自动补全
+    extensions: [".js", ".jsx", ".tsx", ".ts"], //后缀名自动补全
   },
   optimization: {
     splitChunks: {
