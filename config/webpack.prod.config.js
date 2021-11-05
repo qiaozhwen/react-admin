@@ -79,11 +79,7 @@ module.exports = {
         },
       ],
     }),
-    new SpeedMesurePlugin(),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./vendor-manifest.json')
-    })
+    new SpeedMesurePlugin()
   ],
   resolve: {
     extensions: [".js", ".jsx", ".tsx", ".ts"], //后缀名自动补全
@@ -91,18 +87,6 @@ module.exports = {
   optimization: {
     splitChunks: {
       cacheGroups: {
-        react: {
-          chunks: "all",
-          name: "react",
-          test: ({ resource = "" }) => {
-            const [, modulePath] = resource.split(
-              path.resolve(__dirname, "..", "node_modules")
-            );
-            return modulePath && modulePath.includes("react");
-          },
-          reuseExistingChunk: true,
-          enforce: true,
-        },
         // echart: {
         //   test: (module) => {
         //     return /echart/.test(module.context);
