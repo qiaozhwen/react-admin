@@ -5,9 +5,9 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Login from "../page/Login";
-import Page404 from "../page/Page404";
-import Home from "../page/Home";
+import Login from "../page/Login/Login";
+import Page404 from "../page/Page404/Page404";
+import Home from "../page/Home/Home";
 // const test = require.context('../testLuyou', true, /.js$/).keys();
 // console.log('111111111111111111111111111111111111', test)
 export default () => (

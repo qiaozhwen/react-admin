@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import getUser from "../api/getUser";
+import getUser from "../../api/getUser";
 
 const Page404: FC<any> = () => {
   const [count, setCount] = useState(0);
@@ -24,7 +24,7 @@ const Page404: FC<any> = () => {
       }}
     >
       <div>
-        <img src={require("../../assests/images/404.png")} />
+        <img src={require("../../../assests/images/404.png")} />
         <p style={{ textAlign: "center" }}>
           <Link to={"/login"}>去登陆{count}</Link>
         </p>

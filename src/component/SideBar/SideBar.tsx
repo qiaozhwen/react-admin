@@ -32,7 +32,7 @@ class SideBar extends React.Component<any, any> {
     return (
       <Fragment>
         <div style={{ background: "#001529", textAlign: "center" }}>
-          <img src={require("../../assests/images/tea.png")} />
+          <img src={require("../../../assests/images/tea.png")} />
         </div>
         <Menu
           defaultSelectedKeys={["1"]}
