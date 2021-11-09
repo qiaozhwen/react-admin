@@ -8,7 +8,7 @@ import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AppRouter from "../router/AppRouter";
 import { withRouter } from "react-router-dom";
-import Auth from "../component/Auth";
+import Auth from "../component/Auth/Auth";
 
 const { SubMenu } = Menu;
 class Home extends Component<any, any> {

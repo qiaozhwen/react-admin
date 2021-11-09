@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
-import Auth from "../component/Auth";
+import Auth from "../component/Auth/Auth";
 import {Modal} from "antd";
 
 const columns = [
