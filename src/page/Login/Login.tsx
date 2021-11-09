@@ -3,7 +3,7 @@ import "./Login.css";
 import { createForm } from "rc-form";
 import { Form, Button } from "react-bootstrap";
 import { notification } from "antd";
-import loginFnc from "../api/login";
+import loginFnc from "../../api/login";
 const Login: FC<any> = ({
   form: { getFieldDecorator, validateFields },
   history,

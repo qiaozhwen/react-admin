@@ -7,7 +7,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/markPoint';
-import Auth from '../component/Auth'
+import Auth from '../../component/Auth/Auth'
 import {Table} from "react-bootstrap";
 import ReactEcharts from "echarts-for-react";
 const columns = [

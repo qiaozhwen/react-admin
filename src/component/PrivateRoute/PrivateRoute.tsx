@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import checkUser from "../api/getUser";
+import checkUser from "../../api/getUser";
 
 export default class PrivateRoute extends React.Component<any, any> {
   constructor(props: any) {

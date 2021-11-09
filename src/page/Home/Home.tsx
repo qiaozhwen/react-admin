@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./Home.css";
 import { Menu } from "antd";
-import checkUser from "../api/getUser";
-import sideBars from "../utils/sideBarConfig";
-import SideBar from "../component/SideBar";
-import Header from "../component/Header";
+import checkUser from "../../api/getUser";
+import sideBars from "../../utils/sideBarConfig";
+import SideBar from "../../component/SideBar/SideBar";
+import Header from "../../component/Header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AppRouter from "../router/AppRouter";
+import AppRouter from "../../router/AppRouter";
 import { withRouter } from "react-router-dom";
-import Auth from "../component/Auth";
+import Auth from "../../component/Auth/Auth";
 
 const { SubMenu } = Menu;
 class Home extends Component<any, any> {

@@ -15,7 +15,7 @@ export default class Header extends React.Component{
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <div className={'header-right'}>
-                    <img src={require('../../assests/images/myInfo.gif')}/>
+                    <img src={require('../../../assests/images/myInfo.gif')}/>
                 </div>
             </div>
         )
