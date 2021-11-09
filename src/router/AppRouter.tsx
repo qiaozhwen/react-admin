@@ -9,7 +9,7 @@ import Detail from "../page/Detail";
 import DashBord from "../page/DashBord";
 import PrivateRoute from "../component/PrivateRoute";
 import Home from "../page/Home";
-import AsyncComponent from "../component/AsyncComponent";
+import AsyncComponent from "../component/AsyncComponent/AsyncComponent";
 
 function load(component: any) {
   return import(`../page/${component}`);
