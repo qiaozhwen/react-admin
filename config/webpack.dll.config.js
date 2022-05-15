@@ -2,7 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-  // 要打包的模块的数组
+  // 要打包的模块的数
   entry: {
     vendor: ['echarts']
   },
