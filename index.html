@@ -20,12 +20,44 @@
 </style>
 <div id="qz"></div>
 <script>
-  for (let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      console.log('i--->', i)
-      // setNumber(i + 1)
-    }, 1000)
-  }
+  /**
+   * @param {string} first
+   * @param {string} second
+   * @return {boolean}
+   */
+  // pble pale
+  var oneEditAway = function(first, second) {
+    if(first.length > second.length){
+      var temp = first
+      first= second
+      second=temp
+    }
+    if(first.length === second.length){
+      let secondWrongStatus = 'no'
+      first.split('').forEach((cur, index)=>{
+        if(cur !== second.split('')[index] && secondWrongStatus !== 'second'){
+          secondWrongStatus =  secondWrongStatus === 'first'?'second':'first'
+        }
+      })
+      return secondWrongStatus !== 'second'
+    }
+    if(second.length-first.length === 1){
+      let index1=0;
+      let index2=0;
+      while (index1<first.length && index2<second.length){
+        if(first[index1] === second[index2]){
+          index1++
+        }
+        index2++
+        if(index2-index1>1){
+          return false
+        }
+      }
+      return true
+    }
+    return false
+  };
+  console.log(oneEditAway('pale', 'ple'))
 </script>
 </body>
 </html>

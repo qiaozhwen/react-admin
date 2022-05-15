@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AppRouter from "../../router/AppRouter";
 import { withRouter } from "react-router-dom";
 import Auth from "../../component/Auth/Auth";
+import {AstcnCmp} from "./asyncCmp";
 
 const { SubMenu } = Menu;
 class Home extends Component<any, any> {
@@ -25,17 +26,21 @@ class Home extends Component<any, any> {
       });
     });
   }
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.log('55555', error)
+  }
 
   render() {
     return (
       <Auth id={"page-home"}>
         <div className={"home"}>
           <div style={{ width: 256 }}>
-            {/*<SideBar sideBars={sideBars} role="admin" />*/}
+            <SideBar sideBars={sideBars} role="admin" />
           </div>
           <div style={{ flex: 1 }}>
             <Header />
             <AppRouter />
+            <AstcnCmp/>
           </div>
         </div>
       </Auth>
