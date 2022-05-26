@@ -247,6 +247,9 @@ export default class DashBord extends React.Component<any, any>{
         };
         return option
     };
+    testClick =  () =>{
+
+    }
 
     render(){
         return(

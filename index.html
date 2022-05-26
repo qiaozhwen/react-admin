@@ -20,44 +20,97 @@
 </style>
 <div id="qz"></div>
 <script>
-  /**
-   * @param {string} first
-   * @param {string} second
-   * @return {boolean}
-   */
-  // pble pale
-  var oneEditAway = function(first, second) {
-    if(first.length > second.length){
-      var temp = first
-      first= second
-      second=temp
+  function Node(value, next) {
+    this.data= value
+    this.next=next || null
+  }
+  function createLinks(value) {
+    this.head = new Node(value)
+    this.display = function () {
+      return this.head
     }
-    if(first.length === second.length){
-      let secondWrongStatus = 'no'
-      first.split('').forEach((cur, index)=>{
-        if(cur !== second.split('')[index] && secondWrongStatus !== 'second'){
-          secondWrongStatus =  secondWrongStatus === 'first'?'second':'first'
-        }
-      })
-      return secondWrongStatus !== 'second'
-    }
-    if(second.length-first.length === 1){
-      let index1=0;
-      let index2=0;
-      while (index1<first.length && index2<second.length){
-        if(first[index1] === second[index2]){
-          index1++
-        }
-        index2++
-        if(index2-index1>1){
-          return false
-        }
+    this.find = function (item) {
+      let currentNode = this.head
+      while (item !== currentNode.data){
+        currentNode=currentNode.next
       }
-      return true
+      return currentNode
     }
-    return false
-  };
-  console.log(oneEditAway('pale', 'ple'))
+    this.insert = function (node) {
+      let currentNode = this.head
+      if(currentNode.next === null){
+        currentNode.next=node
+      }
+      else {
+        while (currentNode.next){
+          currentNode = currentNode.next
+        }
+        currentNode.next=node
+      }
+      return currentNode
+    }
+  }
+  let linkList = new createLinks(2)
+  linkList.insert( new Node(4))
+  linkList.insert(new Node(6))
+  linkList.insert(new Node(8))
+  linkList.insert(new Node(10))
+  linkList.insert(new Node(12))
+  let linkListDis = linkList.display()
+  let linkListSingle = new createLinks(1)
+  linkListSingle.insert( new Node(3))
+  linkListSingle.insert(new Node(5))
+  linkListSingle.insert(new Node(7))
+  linkListSingle.insert(new Node(9))
+  linkListSingle.insert(new Node(11))
+  let linkListSingleDis = linkListSingle.display()
+  let result=new createLinks(null)
+  let resultDis = result.display()
+  let index = 0
+  while (linkListDis.data && linkListSingleDis.data){
+    if(linkListDis.data>linkListSingleDis.data){
+      result.insert(new Node(linkListSingleDis.data))
+      result.insert(new Node(linkListDis.data))
+    }
+    linkListDis= linkListDis.next || {}
+    linkListSingleDis= linkListSingleDis.next || {}
+  }
+  console.log(resultDis)
+  // class DeferTaskQueue {
+  //   static prePromise = null
+  //   add (task){
+  //     if(!DeferTaskQueue.prePromise){
+  //     DeferTaskQueue.prePromise =task()
+  //   } else {
+  //     DeferTaskQueue.prePromise.then(()=>{
+  //       // DeferTaskQueue.prePromise = task()
+  //       task()
+  //     })
+  //   }
+  //   }
+  // }
+  // async function testRun() {
+  //   const delay = ms => new Promise((resolve) => setTimeout(resolve, ms))
+  //   const deferTaskQueue = new DeferTaskQueue()
+  //   deferTaskQueue.add(async () => {
+  //     console.log('1 begin')
+  //     await delay(1000)
+  //     console.log('1 end')
+  //   })
+  //   deferTaskQueue.add(async () => {
+  //     console.log('2 begin')
+  //     await delay(300)
+  //     console.log('2 end')
+  //   })
+  //   await delay(4000)
+  //   console.log('wait 4s')
+  //   deferTaskQueue.add(async () => {
+  //     console.log('3 begin')
+  //     await delay(1700)
+  //     console.log('3 end')
+  //   })
+  // }
+  // testRun()
 </script>
 </body>
 </html>

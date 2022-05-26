@@ -10,7 +10,10 @@ import AppRouter from "../../router/AppRouter";
 import { withRouter } from "react-router-dom";
 import Auth from "../../component/Auth/Auth";
 import {AstcnCmp} from "./asyncCmp";
-
+import {name} from './test'
+console.log('99000000', name)
+// @ts-ignore
+// import('./test.js').then(res=>console.log(res,'0000000'))
 const { SubMenu } = Menu;
 class Home extends Component<any, any> {
   state = {

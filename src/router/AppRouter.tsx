@@ -1,4 +1,4 @@
-import React from "react";
+import React,{Suspense} from "react";
 import {
   HashRouter as Router,
   Route,
@@ -11,31 +11,29 @@ import PrivateRoute from "../component/PrivateRoute/PrivateRoute";
 import Home from "../page/Home/Home";
 import AsyncComponent from "../component/AsyncComponent/AsyncComponent";
 
-function load(component: any) {
-  return import(`../page/${component}`);
+function load(path: any):React.LazyExoticComponent<any> {
+  return React.lazy(()=>import(path))
 }
+const DashBordLazy =  React.lazy(()=>import('../page/DashBord/DashBord'))
+const TestLazy = React.lazy(()=>import('../page/Test/Test'))
 export default () => (
   <Switch>
+    <Suspense fallback={<div>loading</div>}>
     <PrivateRoute
       exact
       path="/app/dash-bord"
-      component={AsyncComponent(
-        () => import(/* webpackChunkName: "Page-DashBord" */ `../page/DashBord/DashBord`)
-      )}
+      component={DashBord}
     />
-    <PrivateRoute
-      exact
-      path="/app/detail"
-      component={AsyncComponent(
-        () => import(/* webpackChunkName: "Page-Detail" */ `../page/Detail/Detail`)
-      )}
-    />
+    {/*<PrivateRoute*/}
+    {/*  exact*/}
+    {/*  path="/app/detail"*/}
+    {/*  component={<DetailLazy/>}*/}
+    {/*/>*/}
     <PrivateRoute
       exact
       path="/app/test"
-      component={AsyncComponent(
-        () => import(/* webpackChunkName: "Page-Detail" */ `../page/Test/Test`)
-      )}
+      component={TestLazy}
     />
+    </Suspense>
   </Switch>
 );

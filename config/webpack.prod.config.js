@@ -8,6 +8,7 @@ const SpeedMesurePlugin = require("speed-measure-webpack-plugin");
 console.log(__dirname, "-------------");
 module.exports = {
   mode: "production",
+  devtool: 'source-map',
   entry: {
     index: "./index.tsx",
   },

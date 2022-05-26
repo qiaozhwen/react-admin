@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>圣杯布局</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .header,
+    .footer {
+      height: 100px;
+      line-height: 100px;
+      background-color: green;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bolder;
+    }
+
+    .footer {
+      background-color: goldenrod;
+    }
+
+    .container {
+      padding: 0 220px 0 200px;
+      overflow: hidden;
+    }
+
+    .left,
+    .middle,
+    .right {
+      position: relative;
+      float: left;
+      min-height: 130px;
+      word-break: break-all;
+    }
+
+    .left {
+      margin-left: -100%;
+      left: -200px;
+      width: 200px;
+      background-color: red;
+    }
+
+    .right {
+      margin-left: -100%;
+      right: -220px;
+      width: 220px;
+      background-color: green;
+    }
+
+    .middle {
+      width: 100%;
+      background-color: blue;
+    }
+  </style>
+</head>
+
+<body>
+<!--<div id="container">我是：{{name}}</div>-->
+<!--<ul id="qqq" style="height: 100px; overflow-y: auto">-->
+<!--  <li>1111111</li>-->
+<!--  <li>2222222</li>-->
+<!--  <li>3333333</li>-->
+<!--  <li>4444444</li>-->
+<!--  <li>5555555</li>-->
+<!--</ul>-->
+<select id="qqq">
+  <option >1111111</option>
+  <option>2222222</option>
+  <option>3333333</option>
+  <option>4444444</option>
+  <option>5555555</option>
+</select>
+<script>
+  var qqq = document.getElementById('qqq')
+  qqq.addEventListener('selectionchange', function (e) {
+    console.log(e)
+  })
+  class myPromise {
+    constructor(exec){
+      this.value = null;
+      this.reason = null;
+      this.status = 'pending';
+      this.resolveCallBack = [];
+      this.rejectCallBack = [];
+      let resolve = this.resolve
+      let reject = this.reject
+      try{
+        exec(resolve, reject)
+      }
+      catch (err){
+        this.reject(err)
+      }
+    }
+    resolve = (value)=>{
+      if(this.status === 'pending'){
+        this.status = 'resolved'
+        this.value = value
+        this.resolveCallBack.forEach(cb=>cb(value))
+      }
+    }
+    reject = (reason)=>{
+      if(this.status === 'pending'){
+        this.reason=reason
+        this.status='reject'
+        this.rejectCallBack.forEach(cb=>cb(reason))
+      }
+    }
+    then =(onFul, onFail)=>{
+      let onFulComplete = typeof onFul === "function" ? onFul: val=>val
+      let onFailComplete = typeof onFail === "function" ? onFail: reason=>{throw reason}
+      let promise2 = new myPromise((res, rej)=>{
+        if(this.status === 'resolved'){
+          let value = onFulComplete(this.value);
+          this.resolve(value)
+          res(value)
+        }
+        if(this.status === 'rejected'){
+          let value = onFailComplete(this.reason)
+          this.reject(value)
+          rej(value)
+        }
+        if(this.status === "pending"){
+          this.resolveCallBack.push(()=>{
+            let value = onFulComplete(this.value);
+            res(value)
+          })
+          this.rejectCallBack.push(()=>{
+            let value = onFailComplete(this.reason)
+            rej(value)
+          })
+        }
+      })
+      return promise2
+    }
+  }
+  const test = new myPromise((res,rej)=>res('测试promise'))
+  test.then(res=>{
+    console.log('测试一下then的返回', res)
+    return res
+  })
+    .then(cur=> {
+      console.log('哈哈哈', cur)
+      return cur
+    })
+    .then(cur=> {
+      console.log('哈哈哈', cur)
+      return cur
+    })
+    .then(cur=> {
+      console.log('哈哈哈', cur)
+      return cur
+    })
+    .then(cur=> {
+      console.log('哈哈哈', cur)
+      return cur
+    })
+    .then(cur=> {
+      console.log('哈哈哈', cur)
+      return cur
+    })
+    .then(cur=> {
+      console.log('哈哈哈', cur)
+      return cur
+    })
+  // var array = [
+  //   {pid: 4, id: 6617, name: "a",subNode:[]},
+  //   {pid: 5, id: 666, name: "a",subNode:[]},
+  //   {pid: 4, id: 6616, name: "a",subNode:[]},
+  //   {pid: 6616, id: 66161, name: "a",subNode:[]},
+  //   {pid: -1, id: 0, name: "a",subNode:[]},
+  //   {pid: 0, id: 4, name: "a",subNode:[]},
+  //   {pid: 0, id: 5, name: "a",subNode:[]},
+  //   {pid: 4, id: 10, name: "a",subNode:[]},
+  //   {pid: 10, id: 451, name: "a",subNode:[]},
+  //   {pid: 0, id: 98, name: "a",subNode:[]},
+  //   {pid: 98, id: 23, name: "a",subNode:[]},
+  //   {pid: 98, id: 523, name: "a",subNode:[]}
+  // ];
+  // let result= array.map(cur=>{
+  //   let parent = array.find(item=>item.id === cur.pid)
+  //   if(parent) {
+  //     parent.subNode = [...parent.subNode, cur]
+  //   }
+  //   if(cur.id===0){
+  //     return cur
+  //   }
+  //   return null
+  // }).filter(Boolean)
+  // console.log(result)
+
+  // function Node(name) {
+  //   this.name = name;
+  //   this.next = null;
+  // }
+  // function CreateList(firstName) {
+  //   this.node = new Node(firstName)
+  //   this.insert = (name)=>{
+  //     let tempNode = new Node(name)
+  //     this.node.next=tempNode
+  //   }
+  //   this.display = ()=>this.node
+  // }
+  // let head = new CreateList(2)
+  // head.insert(4)
+  // head.insert(6)
+  // head.insert(8)
+  // console.log(head.display())
+  //
+  //
+  // const debounce = function (cb, delay) {
+  //   var now = Date.now()
+  //   return function (){
+  //     var pre = Date.now()
+  //     if(pre-now>delay){
+  //       cb(...arguments)
+  //       now=Date.now()
+  //     }
+  //   }
+  // }
+  // let tested = debounce((e)=>console.log('test',e),1000)
+  // window.onresize= tested
+  //
+  //
+  //
+  // class myListener {
+  //   constructor(){
+  //     this.state = {}
+  //   }
+  //   on(name, cb){
+  //     this.state[name] = this.state[name] && [...this.state[name], cb] || [cb]
+  //   }
+  //   publish(name){
+  //     this.state[name].forEach((cur)=>{
+  //       cur()
+  //     })
+  //   }
+  // }
+  // var testa = new myListener()
+  // testa.on('drink', ()=>{console.log('drinking')})
+  // setTimeout(()=>{
+  //   testa.publish('drink')
+  // },3000)
+
+
+  // function Node(val) {
+  //   this.data= val || null
+  //   this.next = null
+  // }
+  // function createLinks(head) {
+  //   let headNode =  new Node(head)
+  //   this.insert= function (val) {
+  //     if(!headNode.next) headNode.next=new Node(val)
+  //     else {
+  //       let tempNode = headNode
+  //       while (tempNode.next){
+  //         tempNode = headNode.next
+  //       }
+  //       tempNode.next = new Node(val)
+  //     }
+  //   }
+  //   this.display = function (){
+  //     console.log(headNode, 'links')
+  //     return headNode
+  //   }
+  // }
+  // var links = new createLinks('1')
+  // links.insert('2')
+  // links.insert('3')
+  // console.log(links.display())
+
+  const arrary = [5, 2, 7, 8, 34, 7, 39, 12, 56, 9, 1]
+  // 归并排序
+  function mergeSort(arr) {
+    if(arr.length<=1)return arr
+    let middleIndex=  Math.floor(arr.length/2)
+    const leftArr = arr.slice(0, middleIndex)
+    const rightArr = arr.slice(middleIndex)
+    return merge(mergeSort(leftArr), mergeSort(rightArr))
+  }
+  function merge(left,right) {
+    const result = [];
+    while (left.length && right.length) {
+      // 注意: 判断的条件是小于或等于，如果只是小于，那么排序将不稳定.
+      if (left[0] <= right[0]) {
+        result.push(left.shift());
+      } else {
+        result.push(right.shift());
+      }
+    }
+    while (right.length){
+      result.push(right.shift());
+    }
+    while (left.length){
+      result.push(left.shift());
+    }
+    return result
+  }
+  console.log('归并排序-->',mergeSort(arrary))
+  // 快速排序
+  function quickSort(arr) {
+    if(arr.length <= 1)return arr
+    let middleIndex = Math.floor(arr.length/2)
+    let temp = arr[middleIndex]
+    arr.splice(middleIndex, 1)
+    let left = [];
+    let right = [];
+    for(let i = 0; i<arr.length;i++){
+      if(arr[i]<=temp){
+        left.push(arr[i])
+      }else {
+        right.push(arrpi)
+      }
+    }
+    return quickSort(left).concat(temp, quickSort(right))
+  }
+  console.log('快速排序-->',mergeSort(arrary))
+  // 冒泡排序
+  function bubbleSort(arr) {
+    for(let i =0;i<arr.length;i++){
+      for(let j=0;j<arr.length-1-i;j++){
+        if(arr[j]>arr[j+1]){
+          let temp = arr[j+1]
+          arr[j+1] = arr[j]
+          arr[j] = temp
+        }
+      }
+    }
+  }
+  console.log('冒泡排序-->',mergeSort(arrary))
+  window.onload=function () {
+    console.log('window.onload')
+  }
+  console.log(document.getElementById('qqq'))
+  // 二叉树遍历
+  const tree = {
+    value: "-",
+    left: {
+      value: '+',
+      left: {
+        value: 'a',
+      },
+      right: {
+        value: '*',
+        left: {
+          value: 'b',
+        },
+        right: {
+          value: 'c',
+        }
+      }
+    },
+    right: {
+      value: '/',
+      left: {
+        value: 'd',
+      },
+      right: {
+        value: 'e',
+      }
+    }
+  }
+  let res=[]
+  // 先序遍历
+  function preForeachTree(node) {
+    if(!node)return;
+    res.push(node.value)
+    preForeachTree(node.left)
+    preForeachTree(node.right)
+  }
+  // 后序遍历
+  function backForeachTree(node) {
+    if(!node)return;
+    backForeachTree(node.left)
+    backForeachTree(node.right)
+    res.push(node.value)
+  }
+  // 中序遍历
+  function middleForeachTree(node) {
+    if(!node)return;
+    preForeachTree(node.left)
+    res.push(node.value)
+    preForeachTree(node.right)
+  }
+  middleForeachTree(tree)
+  console.log(res)
+  // 函数curry化
+  function myCurry(fn, ...argsPar) {
+    const argLength = fn.length
+    return (...args)=>{
+      const newArgLength = args.concat(...argsPar)
+      console.log(newArgLength, argLength)
+      if(newArgLength.length === argLength) return fn(...newArgLength)
+      else {
+        return myCurry(fn, newArgLength)
+      }
+    }
+  }
+  async function test1(){
+    console.log(1)
+  }
+  try {
+    throw new Error('111')
+  }
+  catch (e){
+    console.log(e,'333')
+  }
+
+  while(true){
+    return
+  }
+
+</script>
+</body>
+
+</html>

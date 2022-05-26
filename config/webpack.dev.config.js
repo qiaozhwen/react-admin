@@ -39,11 +39,6 @@ module.exports = {
         use: ["awesome-typescript-loader"],
         exclude: /node_modules/,
       },
-      {
-        test: /\.(tsx|ts)?$/,
-        loader: myLoader,
-        exclude: /node_modules/,
-      },
     ],
   },
   devServer: {

@@ -49,13 +49,6 @@ const Test = ({ tya = { name: "123" } }: any) => {
     })
   }
   const handerClick=()=> {
-
-    console.log('ii')
-    for (var i = 0; i < 5; i++) {
-      setTimeout(() => {
-        setNumber(num + 1)
-      }, 1000)
-    }
     // Promise.resolve().then(res=>{
     //   console.log(num, 'inside')
     //   setNumber(num => num + 1)
@@ -78,19 +71,12 @@ const Test = ({ tya = { name: "123" } }: any) => {
     //   // // console.log(num, 'inside')
     //   // setNumber(num+1)
     // })
-    // console.log(num, 'inside')
-    // setNumber(num => num + 1)
-    // console.log(num, 'inside')
-    // setNumber(num => num + 1)
-    // console.log(num, 'inside')
-    // setNumber(num => num + 1)
-    // console.log(num, 'inside')
-    // setNumber(num => num + 1)
-    // console.log(num, 'inside')
-    // setNumber(num => num + 1)
-    // console.log(num, 'inside')
+    setNumber(2)
+    setNumber(3)
+    setNumber(4)
+    setNumber(5)
   }
-  console.log(num)
+  console.log('🚀')
   // console.log("useEffect run father");
   return (
     <>
