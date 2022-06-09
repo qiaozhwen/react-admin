@@ -60,8 +60,70 @@
     }
   </style>
 </head>
+<style>
+  .wrapper {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    /*align-items: center;*/
+    flex-wrap:wrap;
+  }
+  .box1 {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+  }
+  .box2 {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+  .box3 {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+  }
+  .content1 {
+    height: 100px;
+    border: 1px solid #000;
+  }
+  .content2 {
+    height: 100px;
+    border: 1px solid #000;
+  }
+  .content3 {
+    height: 100px;
+    border: 1px solid #000;
+  }
+  .content4 {
+    height: 100px;
+    border: 1px solid #000;
+  }
+  .content5 {
+    height: 100px;
+    border: 1px solid #000;
+  }
+  .content2::after{
 
+  }
+  .content2:after{
+
+  }
+</style>
 <body>
+<div class="wrapper">
+  <div class="box1">
+    <div class="content1">content1</div>
+    <div class="content2">content2</div>
+  </div>
+  <div class="box2">
+    <div class="content3">content3</div>
+  </div>
+  <div class="box3">
+    <div class="content4">content4</div>
+    <div class="content5">content5</div>
+  </div>
+</div>
 <!--<div id="container">我是：{{name}}</div>-->
 <!--<ul id="qqq" style="height: 100px; overflow-y: auto">-->
 <!--  <li>1111111</li>-->
@@ -117,27 +179,94 @@
       let onFailComplete = typeof onFail === "function" ? onFail: reason=>{throw reason}
       let promise2 = new myPromise((res, rej)=>{
         if(this.status === 'resolved'){
-          let value = onFulComplete(this.value);
-          this.resolve(value)
-          res(value)
+          try {
+            let x =  onFulComplete(this.value);
+            resolvePromise(promise2, x, res, rej)
+          }
+          catch (e){
+            rej(e)
+          }
         }
         if(this.status === 'rejected'){
-          let value = onFailComplete(this.reason)
-          this.reject(value)
-          rej(value)
+          try {
+            let x =onFailComplete(this.reason)
+            resolvePromise(promise2, x, res, rej)
+          }
+          catch (e) {
+            rej(e)
+          }
         }
         if(this.status === "pending"){
           this.resolveCallBack.push(()=>{
-            let value = onFulComplete(this.value);
-            res(value)
+            try {
+              let x = onFulComplete(this.value)
+              resolvePromise(promise2, x, res, rej)
+            }
+            catch (e){
+              rej(e)
+            }
           })
           this.rejectCallBack.push(()=>{
-            let value = onFailComplete(this.reason)
-            rej(value)
+            try {
+              let x = onFailComplete(this.value)
+              resolvePromise(promise2, x, res,rej)
+            }
+            catch (e) {
+              rej(e)
+            }
           })
         }
       })
       return promise2
+    }
+  }
+  const resolvePromise = (promise2, x, resolve,reject)=>{
+    if(x === promise2) return reject(new TypeError('拒绝循环引用'))
+    else if(x instanceof myPromise){
+      const status = x.status;
+      if(status ==='pending'){
+        x.then((res)=>{
+          resolve(res)
+        })
+      }
+      if(status ==='resolved'){
+        resolve(x.value)
+      }
+      if(status ==='rejected'){
+        reject(x.reason)
+      }
+    }
+    else if(x !==null && (typeof x === "function"|| typeof x ==="object")){
+      let then;
+      try {
+          then  = x.then
+      } catch (e){
+        reject(e)
+      }
+      if(typeof then === "function"){
+        let called = false
+        try {
+          then.call(x, (r)=>{
+            if(called)return
+            called=true
+            resolvePromise(promise2, r, resolve, reject)
+          }, (j)=>{
+            if(called)return
+            called = true
+            reject(j)
+          })
+        }catch (e){
+          if(called) return
+          called = true
+          reject(e)
+        }
+      }
+      else {
+        resolve(x)
+      }
+    }
+    else {
+      resolve(x)
     }
   }
   const test = new myPromise((res,rej)=>res('测试promise'))
@@ -402,6 +531,9 @@
       }
     }
   }
+  const hCury = myCurry((a,b,c,d)=>a+b+c+d)
+  console.log(
+    hCury(1)(2)(3)(4))
   async function test1(){
     console.log(1)
   }
@@ -411,11 +543,345 @@
   catch (e){
     console.log(e,'333')
   }
+  var aa = Array.from({length:12}, (cur,index)=>{
+    return 'fic'
+  })
+  console.log(aa)
 
-  while(true){
-    return
+
+
+
+  var object = {a:'1',b:'2', c:[1,2],d:{e:{f:23}}}
+  function cloneDeep(obj) {
+    let result = Array.isArray(obj) ? []:{}
+    if(typeof obj === 'object'){
+      for(var val in obj){
+        result[val] = cloneDeep(obj[val])
+      }
+    }
+    else {
+      return obj
+    }
+    return result
+  }
+  console.log(cloneDeep(object))
+
+
+
+
+  setTimeout(()=>{
+    window.localStorage.setItem('qz','10001')
+  },3000)
+
+
+
+  function myNew() {
+    let returnObj = {}
+    const daa = Array.from(arguments)
+    let cb = daa.shift()
+    console.log(daa)
+    cb.call(returnObj, ...daa)
+    returnObj.__proto__ = cb.prototype
+    return returnObj
+  }
+  function cons(male) {
+    this.name='123'
+    this.age=43
+    this.male = male
+  }
+  cons.prototype.hhh = function () {
+    return 'hhh'
+  }
+  const aaaa = myNew(cons, '男')
+  console.log(aaaa)
+  console.log(
+    Array.from(new Set([1,2,3,4])))
+
+  class qz {
+    constructor() {
+      this.name='Tom'
+      // this.getName = ()=>{console.log('刷了')}
+    }
+    getName(){
+      return {
+        name:'Jerry',
+        cb:function () {
+          console.log(this.name,'123')
+        }
+      }
+    }
+  }
+  const vv = new qz()
+  vv.getName()
+
+
+
+
+  function cloneDeep(data) {
+    if(typeof data === "object"){
+      let reciewObj = Array.isArray(data) ? []:{}
+      for(var val in data){
+        reciewObj[val] = cloneDeep(data[val])
+      }
+      return reciewObj
+    }
+    else return data
+  }
+  const target = {
+    field1: 1,
+    field2: undefined,
+    field3: {
+      child: new RegExp(/$s/)
+    },
+    field4: [2, 4, 8],
+    f: { f: { f: { f: { f: { f: { f: { f: { f: { f: { f: { f: {} } } } } } } } } } } },
+  };
+  console.log(cloneDeep(target),'deepClone')
+
+
+ async function getAsync(cb) {
+    try {
+      const data = await cb()
+      return [null, data]
+    }
+    catch (e) {
+      return ['error', e]
+    }
+  }
+  async function esAsy() {
+    const res = await getAsync(()=>new Promise((resolve, reject)=> {
+      reject('报错了')
+    }))
+    console.log(res,'11')
+  }
+  esAsy()
+
+
+  function debounce(cb, delay) {
+    // 防抖
+    // let timer = null
+    // return function () {
+    //   if(timer) {
+    //     clearTimeout(timer);
+    //     timer=null
+    //   }
+    //   const args = Array.from(arguments)
+    //   timer = setTimeout(()=>{
+    //     cb(...args)
+    //   },100)
+    // }
+    // 节流
+    let now = Date.now()
+    return function D() {
+      let pre = Date.now()
+      if(pre-now>=delay){
+        cb(...arguments)
+        now = Date.now()
+      }
+    }
+  }
+  const cbs = debounce((e)=>{console.log(e)}, 4000)
+  window.addEventListener('resize', cbs)
+
+  Function.prototype.qzBind = function (obj) {
+    const that = this
+    return function F() {
+      if(this instanceof F){
+        return new that(...arguments)
+      }
+      return  that.call(obj, ...arguments)
+    }
+  }
+  function foo(){
+    this.b=100;
+    return this.a;
   }
 
+  function foo2(){
+    console.log(this instanceof foo2)
+    this.b=100;
+  }
+  function myNew(cb, ...args) {
+    let obj = {}
+    obj.__proto__ = cb.prototype
+    cb.call(obj, ...args)
+    return obj
+  }
+  console.log(myNew(foo2) instanceof foo2)
+  var func=foo.qzBind({a:1});
+  console.log(func,'111')
+  console.log(new func(),'111')
+
+
+  function flattenDeep(arr) {
+    return Array.isArray(arr)?arr.reduce((pre,cur)=>[...pre, ...flattenDeep(cur)],[]) : [arr]
+  }
+  function flater(arr) {
+    let result = []
+    for(var val in arr){
+      result = result.concat(Array.isArray(arr[val]) ? [...flater(arr[val])] :[arr[val]])
+    }
+    return result
+  }
+  console.log('123',
+    flater([1, [[2], [3, [4]], 5]]))
+  function sleep() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        console.log('finish')
+        resolve("sleep");
+      }, 2000);
+    });
+  }
+  async function test32() {
+    let value = await sleep();
+    console.log("object");
+  }
+  test32()
+
+
+  function myCompose(...funcs) {
+    // return funcs.reduce((a, b) => (...args) => a(b(...args)), (dat)=>dat)
+    return function (args) {
+     return  funcs.reduce((pre, cur) => cur(pre), args)
+    }
+  }
+  function a1(a) {
+    return a+1
+  }
+  function a2(a) {
+    return a+2
+  }
+  function a3(a) {
+    return a+3
+  }
+  function a4(a) {
+    return a+4
+  }
+  const hsa = myCompose(a1,a2,a3,a4)
+  console.log(hsa(0), '12')
+  var name = 'sg'
+  let uu = {
+    name:'sxc',
+    func:()=>{console.log(this.name)}
+  }
+  uu.func()
+  function ADD(a) {
+    console.log(a+99)
+    return a+99
+  }
+  eval(`ADD(1)`)
+
+  class qzObserver {
+    constructor(name) {
+      this.name = name
+    }
+    onStateChange (data) {
+      console.log(`我是${this.name},监听到了${data}`)
+    }
+  }
+  class oberserver {
+    static obs = []
+    add(ober){
+      oberserver.obs.push(ober)
+    }
+    notice(){
+      for(var val in oberserver.obs){
+        oberserver.obs[val].onStateChange('我变了')
+      }
+    }
+  }
+  const obs1 = new qzObserver('第一个观察者')
+  const obs2 = new qzObserver('第二个观察者')
+  const obs3 = new qzObserver('第三个观察者')
+  const obs = new oberserver()
+  obs.add(obs1)
+  obs.add(obs2)
+  obs.add(obs3)
+  obs.notice()
+  var obj5 = {
+    index:1
+  }
+  var obj6 = new Proxy(obj5,{
+    get: (target, key)=>{
+      console.log(target, key, '13')
+      return target[key] +=1
+    }
+  })
+  var value = 0; //window.value
+  Object.defineProperty(window, 'a', {
+    get: function() {
+      return this.value += 1;
+    }
+  });
+  var abca= {
+    i:1,
+    valueOf:function (){
+      return abca.i++
+    }
+  }
+
+  var qzz = 0;
+  console.log(
+    qzz++,'qzz')
+  console.log(abca==1&& abca==2 &&abca==3,'abc')
+  console.log(a===1 && a===2 && a===3) //true
+
+  var aaa1a = obj5.index;
+
+  const promise1 = Promise.resolve(3);
+  const promise2 = 42;
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 100, 'foo');
+  });
+
+  Promise.all([promise1, promise2, promise3]).then((values) => {
+    console.log(values, '123');
+  }, (e)=>console.log(e,'123')).catch(e=>console.log(e));
+  // expected output: Array [3, 42, "foo"]
+
+  function myPromiseAll(pArr) {
+    let result = []
+    return new Promise((resolve, reject)=>{
+      for(var val in pArr){
+        pArr[val].then(res=>{
+          result.push(res)
+          if(result.length === pArr.length){
+            resolve(result)
+          }
+        }, (err)=>reject(err))
+      }
+    })
+  }
+  const dataPArr = myPromiseAll([new Promise((resolve)=>setTimeout(()=>resolve('123'),3000)),
+ new Promise((resolve)=>resolve('456')),
+    new Promise((resolve,reject)=>reject('789')),
+    Promise.resolve(4).then(res=>res)
+  ])
+  dataPArr.then(res=>console.log(res,'da'),res=>console.log(res,'da2'))
+  console.log(dataPArr,'dataPArr')
+
+
+  function thorttle(cb) {
+    let pre = Date.now()
+    return function (...args) {
+      let now = Date.now()
+      if(now-pre >= 1000){
+        cb.call(null, ...args)
+        pre = Date.now()
+      }
+    }
+  }
+  // const cbc = thorttle(()=>console.log('节流'))
+  // setInterval(()=>cbc(),500)
+  window.requestAnimationFrame(()=>{
+    checkRAf()
+    // checkRAF(cb)
+  })
+  function checkRAf() {
+    console.log('检查RAF')
+    // window.requestAnimationFrame(()=>checkRAf())
+  }
 </script>
 </body>
 

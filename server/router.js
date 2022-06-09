@@ -118,6 +118,17 @@ app.get("/api/check", function (req, res) {
     res.status(401).json({ message: `已失效` });
   }
 });
+app.post('/api/getFileId',function (req, res) {
+  // console.log(req)
+  res.status(200).json({ message: `1234567` });
+})
+app.post('/api/getFileById',function (req, res) {
+  const {
+  query:{ file,fileId}
+  } = req;
+  console.log('file fileId---->', req)
+  res.status(200).json({ message: `id2` });
+})
 app.listen(port, function () {
   console.log("server started on " + port);
 });

@@ -17,8 +17,32 @@
         height: 100%;
         width: 100%;
     }
+    .conr{
+      display: flex;
+    }
+    .left, .right, .middle{
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      border: 1px solid black;
+    }
+    .middle-content{
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      border: 1px solid black;
+    }
+    .middle{flex: 1}
 </style>
-<div id="qz"></div>
+<div id="qz">
+  <div class="conr">
+    <div class="left">left</div>
+    <div class="middle">
+      <div class="middle-content">middle</div>
+    </div>
+    <div class="right">right</div>
+  </div>
+</div>
 <script>
   function Node(value, next) {
     this.data= value
@@ -75,7 +99,7 @@
     linkListDis= linkListDis.next || {}
     linkListSingleDis= linkListSingleDis.next || {}
   }
-  console.log(resultDis)
+  console.log(resultDis, '123')
   // class DeferTaskQueue {
   //   static prePromise = null
   //   add (task){
@@ -111,6 +135,160 @@
   //   })
   // }
   // testRun()
+  // var array =  [5, 2, 7, 8, 34, 7, 39, 12, 56, 9, 1]
+  var array = [7,21,5,21,52,14,5,21,6,8,97,654234,12312,55221,345,32,32,1,31457,54]
+  // 归并
+  function merge(arr) {
+    if(arr.length <=1)return arr
+    let middleIndex = Math.floor(arr.length/2)
+    let left = arr.slice(0,middleIndex)
+    let right = arr.slice(middleIndex)
+    return mergeSort(merge(left), merge(right))
+  }
+  function mergeSort(left, right) {
+    let result = []
+    while(left.length && right.length){
+      if(left[0]<=right[0]){
+        result.push(left.shift())
+      }
+      else {
+        result.push(right.shift())
+      }
+    }
+    while (left.length){
+      result.push(left.shift())
+    }
+    while (right.length){
+      result.push(right.shift())
+    }
+    return result
+  }
+  console.log(merge(array))
+  // 快速排序
+
+  function quickSort(arrs) {
+    const arr = [...arrs]
+    if(arr.length <2)return arr
+    let middleIndex = Math.ceil(arr.length/2)
+    let left = []
+    let right = []
+    const temp = arr[middleIndex]
+    arr.splice(middleIndex, 1)
+    for(var val in arr){
+      if(arr[val]<= temp){
+        left.push(arr[val])
+      }
+      else {
+        right.push(arr[val])
+      }
+    }
+    return  quickSort(left).concat(temp, quickSort(right))
+  }
+  console.log(quickSort(array))
+  // 冒泡排序
+  function bubbleSort(arr) {
+    for(let i = 0 ; i<arr.length; i++){
+      for(let j=0; j<arr.length-1-i;j++){
+        if(arr[j]>arr[j+1]){
+          const temp = arr[j]
+          arr[j] = arr[j+1]
+          arr[j+1]= temp
+        }
+      }
+    }
+    return arr
+  }
+  console.log(bubbleSort(array))
+
+  function myCurry(fn, ...args) {
+    const param = fn.length
+    return function (...argus) {
+      let paramIn = [...argus, ...args]
+      if(paramIn.length === param) {
+        return fn(...paramIn)
+      }
+      else {
+        return myCurry(fn, ...paramIn)
+      }
+    }
+  }
+  const fnc = myCurry((a,b,c,d)=>a+b+c+d)
+  console.log(fnc(1)(2)(3)(4), '123')
+
+  function Node(val) {
+    this.data = val || ''
+    this.next = null
+  }
+  function createLinkList(head) {
+    let header = new Node(head)
+    this.insert = function (val) {
+      let currentNode = header
+      while (currentNode.next){
+        currentNode = currentNode.next
+      }
+      currentNode.next = new Node(val)
+    }
+    this.display = function () {
+      return header
+    }
+  }
+  const li = new createLinkList('头部')
+  li.insert('二')
+  li.insert('三')
+  li.insert('四')
+  console.log(li.display())
+  function myCompose(...fns) {
+    return function (args) {
+     return  fns.reduce((pre, cur)=>cur(pre), args)
+    }
+  }
+  // const cFb = myCompose((a)=>a+1, b=>b+2, c=>c+3, d=>d+4)
+  // console.log(cFb(0))
+  /**
+   * @param {number[]} piles
+   * @param {number} h
+   * @return {number}
+   * 输入：piles = [30,11,23,4,20], h = 5
+   * 输出：30
+   */
+  var minEatingSpeed = function(piles, h) {
+    var males = Math.ceil(piles.reduce((cur,pre)=>pre+=cur, 0)/h)
+    while(true){
+      var k = 0;
+      for(var val of piles){
+        if(val > males){
+          k+=Math.floor(val/males) + (val%males === 0? 0:1)
+        }
+        else {k++}
+      }
+      if(k === h){
+        break;
+      }
+      males+=1
+    }
+    return males
+  };
+  console.log(minEatingSpeed([30,11,23,4,20], 6),'444')
+  class Person {
+    constructor(fname,lname) {
+      this.firstName = fname;
+      this.lastName = lname;
+    }
+  }
+
+  class Employee extends Person {
+    // constructor(fname,lname) {
+    //   console.log('444')
+    // }
+    get fullName() { return this.firstName + ' ' + this.lastName; }
+    get position() { return this._position; }
+    set position(value) { this._position = value; }
+    get nickName() { return this._nickname; }
+    set nickName(value) { this._nickname = value; }
+  }
+
+  let e1 = new Employee('Elizabeth','Doe');
+  console.log(typeof e1.constructor)
 </script>
 </body>
 </html>

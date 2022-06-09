@@ -22,7 +22,7 @@ service.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log("-------------error", error.response.status);
+    // console.log("-------------error", error.response.status);
     // if (error.response.status == "401") {
     //   window.location.href =
     //     process.env.NODE_ENV === "development"

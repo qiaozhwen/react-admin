@@ -85,6 +85,10 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx", ".tsx", ".ts"], //后缀名自动补全
   },
+  externals: {
+    react:"React",
+    // reactDom:"react-dom"
+  },
   optimization: {
     splitChunks: {
       cacheGroups: {
