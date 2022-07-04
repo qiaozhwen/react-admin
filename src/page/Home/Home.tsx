@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from "react-redux";
 import "./Home.css";
 import { Menu } from "antd";
 import checkUser from "../../api/getUser";
@@ -31,7 +32,7 @@ class Home extends Component<any, any> {
       <Auth id={"page-home"}>
         <div className={"home"}>
           <div style={{ width: 256 }}>
-            {/*<SideBar sideBars={sideBars} role="admin" />*/}
+            <SideBar sideBars={sideBars} role="admin" />
           </div>
           <div style={{ flex: 1 }}>
             <Header />
