@@ -10,6 +10,7 @@ import DashBord from "../page/DashBord/DashBord";
 import PrivateRoute from "../component/PrivateRoute/PrivateRoute";
 import Home from "../page/Home/Home";
 import AsyncComponent from "../component/AsyncComponent/AsyncComponent";
+import Test from "../page/Test/Test";
 
 function load(component: any) {
   return import(`../page/${component}`);
@@ -19,23 +20,17 @@ export default () => (
     <PrivateRoute
       exact
       path="/app/dash-bord"
-      component={AsyncComponent(
-        () => import(/* webpackChunkName: "Page-DashBord" */ `../page/DashBord/DashBord`)
-      )}
+      component={DashBord}
     />
     <PrivateRoute
       exact
       path="/app/detail"
-      component={AsyncComponent(
-        () => import(/* webpackChunkName: "Page-Detail" */ `../page/Detail/Detail`)
-      )}
+      component={Detail}
     />
     <PrivateRoute
       exact
       path="/app/test"
-      component={AsyncComponent(
-        () => import(/* webpackChunkName: "Page-Detail" */ `../page/Test/Test`)
-      )}
+      component={Test}
     />
   </Switch>
 );

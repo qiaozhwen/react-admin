@@ -5,6 +5,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const SpeedMesurePlugin = require("speed-measure-webpack-plugin");
+// const ExposeRuntimeCssAssetsPlugin = require("single-spa-css/ExposeRuntimeCssAssetsPlugin.cjs");
+
 console.log(__dirname, "-------------");
 module.exports = {
   mode: "production",
@@ -16,6 +18,8 @@ module.exports = {
     filename: "[name]-[hash:5].js",
     chunkFilename: "[name]-[hash:5].js",
     publicPath: "./",
+    library: "react-admin",
+    libraryTarget: "umd"
   },
   module: {
     //loaders加载器
@@ -68,7 +72,7 @@ module.exports = {
       template: "index.html",
     }),
     new ExtractTextPlugin({
-      filename: `[name]_[hash].css`,
+      filename: `[name].css`,
     }),
     new CopyWebpackPlugin({
       // 复制插件
@@ -79,40 +83,44 @@ module.exports = {
         },
       ],
     }),
-    new SpeedMesurePlugin()
+    new SpeedMesurePlugin(),
+    // new ExposeRuntimeCssAssetsPlugin({
+    //   // The filename here must match the filename for the MiniCssExtractPlugin
+    //   filename: "[name].css",
+    // }),
   ],
   resolve: {
     extensions: [".js", ".jsx", ".tsx", ".ts"], //后缀名自动补全
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        // echart: {
-        //   test: (module) => {
-        //     return /echart/.test(module.context);
-        //   }, // 直接使用 test 来做路径匹配，echart
-        //   chunks: "all",
-        //   name: "echart",
-        //   reuseExistingChunk: true,
-        //   enforce: true,
-        // },
-        bootstrap: {
-          test: (module) => {
-            return /bootstrap/.test(module.context);
-          }, // 直接使用 test 来做路径匹配，echart
-          chunks: "all",
-          name: "bootstrap",
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        common: {
-          chunks: "all",
-          name: "common",
-          minChunks: 2,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-      },
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       // echart: {
+  //       //   test: (module) => {
+  //       //     return /echart/.test(module.context);
+  //       //   }, // 直接使用 test 来做路径匹配，echart
+  //       //   chunks: "all",
+  //       //   name: "echart",
+  //       //   reuseExistingChunk: true,
+  //       //   enforce: true,
+  //       // },
+  //       bootstrap: {
+  //         test: (module) => {
+  //           return /bootstrap/.test(module.context);
+  //         }, // 直接使用 test 来做路径匹配，echart
+  //         chunks: "all",
+  //         name: "bootstrap",
+  //         reuseExistingChunk: true,
+  //         enforce: true,
+  //       },
+  //       common: {
+  //         chunks: "all",
+  //         name: "common",
+  //         minChunks: 2,
+  //         reuseExistingChunk: true,
+  //         enforce: true,
+  //       },
+  //     },
+  //   },
+  // },
 };

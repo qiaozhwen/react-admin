@@ -2,10 +2,11 @@ const express = require("express");
 // const path = require('path');
 // const fs = require("fs");
 // const request = require('request');
-// const cors = require('cors');
+const cors = require('cors');
 // const http = require('http');
 const app = express();
 const port = 8889;
+app.use(cors());
 app.use(express.static("public"));
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb://111.229.212.111:27017/";
@@ -31,7 +32,6 @@ app.use(
   })
 );
 
-// app.use(cors());
 app.post("/api/registerUser", (req, response) => {
   MongoClient.connect(
     url,
