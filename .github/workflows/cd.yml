@@ -4,32 +4,17 @@ on:
   push:
     branches: master
 jobs:
-  CD:
+  Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      # 拉取代码
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      # 下载Node
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14.x"
-      # 安装依赖。命中缓存则跳过此步
-      - name: Installing Dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: yarn install
-      # 从package.json里获取version属性的值
-      # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
-      - name: Read Version
-        # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
-        id: version
-        uses: ashley-taylor/read-json-property-action@v1.0
-        with:
-          path: ./package.json
-          property: version
-      # 打包生成制品，且把制品压缩到assets.zip压缩包里
-      - name: Building
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
         run: |
-          yarn build
-          zip -r assets ./dist/**
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
